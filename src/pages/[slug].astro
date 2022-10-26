@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getArticles } from '../lib/api.js';
+
+export async function getStaticPaths() {
+  const data = await getArticles();
+  return data.map((post: { slug: any }) => {
+    return {
+      params: { slug: post.slug },
+      props: { post },
+    };
+  });
+}
+const { post } = Astro.props;
+console.log(post);
+---
+
+<Layout>
+  <article class="prose lg:prose-xl mx-auto">
+    <h1>{post.title.rendered}</h1>
+    <div set:html={post.content.rendered} />
+  </article>
+</Layout>

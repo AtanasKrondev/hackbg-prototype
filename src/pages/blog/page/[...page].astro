@@ -5,9 +5,10 @@ import Layout from '../../../layouts/Layout.astro';
 
 export async function getStaticPaths({ paginate }: any) {
   const data = await getArticles();
-  return paginate(data, { pageSize: 4 });
+  return paginate(data, { pageSize: 10 });
 }
 const { page } = Astro.props;
+console.log(page)
 ---
 
 <Layout>
@@ -25,7 +26,7 @@ const { page } = Astro.props;
       </ul>
     </div>
 
-    {page.url.prev && <a href={page.url.prev}>Previous page</a>}
-    {page.url.next && <a href={page.url.next}>Next page</a>}
+    {page.url.prev && <a href={`/hackbg-prototype${page.url.prev}`}>Newer</a>}
+    {page.url.next && <a href={`/hackbg-prototype${page.url.next}`}>Older</a>}
   </article>
 </Layout>

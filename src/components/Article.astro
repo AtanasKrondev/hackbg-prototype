@@ -11,7 +11,7 @@ const categories = await getCategories(post.id)
   <div class="row card-body">
     <div class="col-md-4 bd-placeholder-img card-img-right d-none d-lg-block blog-thumbnail-new" style={`background-image: url(${thumbnailUrl});`} />
     <div class="col-md-8">
-      <a class="text-dark" href={`/blog/` + post.slug}><h3 class="mb-0" set:html={post.title.rendered}></h3></a>        
+      <a class="text-dark" href={`/hackbg-prototype/blog/` + post.slug}><h3 class="mb-0" set:html={post.title.rendered}></h3></a>        
       <strong class="d-inline-block mb-2 text-hack">
         {categories.map((category: { slug: string; name: string; }, i: number) => <><a href={`/hackbg-prototype/category/blog/${category.slug}`} rel="category tag">{category.name}</a> {i < categories.length - 1 && ', '} </>)}
       </strong>

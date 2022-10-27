@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getArticles } from '../lib/api.js';
+import Layout from '../../layouts/Layout.astro';
+import { getArticles } from '../../lib/api.js';
 
 export async function getStaticPaths() {
   const data = await getArticles();
@@ -12,12 +12,11 @@ export async function getStaticPaths() {
   });
 }
 const { post } = Astro.props;
-console.log(post);
 ---
 
 <Layout>
   <article class="prose lg:prose-xl mx-auto">
-    <h1>{post.title.rendered}</h1>
+    <h1 set:html={post.title.rendered} />
     <div set:html={post.content.rendered} />
   </article>
 </Layout>

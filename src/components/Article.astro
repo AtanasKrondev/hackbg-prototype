@@ -1,8 +1,24 @@
 ---
-const { post } = Astro.props;
----
+import { getCategories, getFeaturedMedia } from "../lib/api";
 
-<div>
-  <h2 set:html={post.title.rendered} />
-  <a href={`/` + post.slug}>Read more</a>
+const { post } = Astro.props;
+
+const media = post.featured_media > 0 && await getFeaturedMedia(post.featured_media)
+const thumbnailUrl = media?.media_details?.sizes?.large?.source_url
+const categories = await getCategories(post.id)
+---
+<div class="card mb-3" style="width: 100%;">
+  <div class="row card-body">
+    <div class="col-md-4 bd-placeholder-img card-img-right d-none d-lg-block blog-thumbnail-new" style={`background-image: url(${thumbnailUrl});`} />
+    <div class="col-md-8">
+      <a class="text-dark" href={`/blog/` + post.slug}><h3 class="mb-0" set:html={post.title.rendered}></h3></a>        
+      <strong class="d-inline-block mb-2 text-hack">
+        {categories.map((category: { slug: string; name: string; }, i: number) => <><a href={`/category/blog/${category.slug}`} rel="category tag">{category.name}</a> {i < categories.length - 1 && ', '} </>)}
+      </strong>
+      <div set:html={post.excerpt.rendered} />
+      <div class="mb-1 text-muted">
+        <img data-del="avatar" src="https://hack.bg/wp-content/uploads/2020/09/51704298-f79c-4162-9650-fa005cdec393-150x150.jpg" class="avatar pp-user-avatar avatar-30 photo " height="30" width="30" />
+        <a href="https://hack.bg/author/schitakova/" title="Posts by Silvia" rel="author">Silvia</a> | July 25, 2022</div>
+      </div>
+  </div>
 </div>

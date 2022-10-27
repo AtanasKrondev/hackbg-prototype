@@ -1,7 +1,7 @@
 ---
-import { getArticles } from '../../lib/api.js';
-import Article from '../../components/Article.astro';
-import Layout from '../../layouts/Layout.astro';
+import { getArticles } from '../../../lib/api';
+import Article from '../../../components/Article.astro';
+import Layout from '../../../layouts/Layout.astro';
 
 export async function getStaticPaths({ paginate }: any) {
   const data = await getArticles();

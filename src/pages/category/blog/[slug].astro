@@ -1,0 +1,81 @@
+---
+import { fetchAPI } from '../../../lib/api';
+import Article from '../../../components/Article.astro';
+import Layout from '../../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const data = await fetchAPI('categories');
+  return data.map((category: { slug: any }) => {
+    return {
+      params: { slug: category.slug },
+      props: { category },
+    };
+  });
+}
+
+const {category} = Astro.props;
+
+const data = await fetchAPI(`posts?categories[]=${category.id}`)
+---
+
+<Layout>
+  <div class="container">
+    <div class="row">
+        <div id="primary" class="col-md-9 content-area ">
+            <main id="main" role="main">
+                <div class="text-center">
+                    <h1>Blog</h1>
+                </div>
+                {data.map((post: any)=> <Article post={post} />)}                            
+                            <div class="navigation">
+                                <span class="newer"></span> <span class="older"><a href="https://hack.bg/blog/page/2/">Older »</a></span>
+                            </div><!-- /.navigation -->
+
+                        
+           </main>
+        </div>
+        <div id="secondary" class="col-md-3 sidebar widget-area" role="complementary">
+				<aside id="search" class="widget widget_search">
+			<div class="row">
+				<form role="search" method="get" id="searchform" action="https://hack.bg/">
+					<div class="input-group">
+						<input class="form-control py-2 border-right-0 border" value="" name="s" id="s" placeholder="Search for:">
+						<span class="input-group-append">
+							<button class="btn btn-outline-secondary border-left-0 border" type="submit" id="searchsubmit" value="Search">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
+						</span>
+					</div>
+				</form>
+			</div>		</aside>
+		<aside id="categories" class="widget">
+			<h3 class="widget-title">Categories</h3>
+			<ul>
+				<li class="categories">Categories<ul>	<li class="cat-item cat-item-52"><a href="https://hack.bg/category/apperances/" title="hack - blockchain development and consulting apperances">Apperances</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://hack.bg/category/blog/">Blog</a>
+<ul class="children">
+	<li class="cat-item cat-item-18"><a href="https://hack.bg/category/blog/blockchain-and-business/">Blockchain and Business</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://hack.bg/category/blog/events/">Events</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="https://hack.bg/category/blog/lets-talk-blockchain/">Lets Talk Blockchain</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="https://hack.bg/category/blog/meetups/" title="Meetups organized by hack - Blockchain Development and Consulting">Meet-ups</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://hack.bg/category/blog/news/">News</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://hack.bg/category/blog/partnerships/">Partnerships</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="https://hack.bg/category/blog/blockchain-tech-talks/" title="blockchain tech talks">Tech Talks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://hack.bg/category/blog/tutorials/">Tutorials</a>
+</li>
+</ul>
+</li>
+</ul></li>			</ul>
+		</aside>
+	</div><!-- #secondary .widget-area -->
+    </div><!-- /#content -->
+</div>
+</Layout>

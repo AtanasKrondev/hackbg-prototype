@@ -27,3 +27,23 @@ export async function getArticles() {
 
   return data;
 }
+
+export async function getFeaturedMedia(id: string) {
+  const data = await fetchAPI(`media/${id}`);
+  return data;
+}
+
+export async function getCategories(id: string) {
+  const data = await fetchAPI(`categories?post=${id}`);
+  return data;
+}
+
+export async function getTags(id: string) {
+  const data = await fetchAPI(`tags?post=${id}`);
+  return data;
+}
+
+export async function getAuthor(id: string) {
+  const data = await fetchAPI(`users/${id}`);
+  return data;
+}

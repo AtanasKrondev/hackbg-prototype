@@ -1,7 +1,7 @@
-const API_URL = import.meta.env.PUBLIC_API_URL;
+// const API_URL = import.meta.env.PUBLIC_API_URL;
 
 export async function fetchAPI(query = '') {
-  const res = await fetch(`${API_URL}/${query}`);
+  const res = await fetch(`https://hack.bg/wp-json/wp/v2/${query}`);
 
   if (res.ok) {
     return res.json();
